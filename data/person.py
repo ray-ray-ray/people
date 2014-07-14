@@ -14,5 +14,42 @@ class Person(db.Model):
     birth = db.Column(db.DateTime(timezone=True))
     death = db.Column(db.DateTime(timezone=True))
     time_created = db.Column(db.DateTime(timezone=True), default=datetime.datetime.now, nullable=False)
-    time_modified = db.Column(db.DateTime(timezone=True), default=datetime.datetime.now, onupdate=datetime.datetime.now, nullable=False)
+    time_modified = db.Column(
+        db.DateTime(timezone=True),
+        default = datetime.datetime.now,
+        onupdate = datetime.datetime.now,
+        nullable = False)
     time_removed = db.Column(db.DateTime(timezone=True))
+
+
+    def __init__(
+        self,
+        name,
+        creator_id,
+        mom_id = None,
+        dad_id = None,
+        birth = None,
+        death = None,
+        time_created = None,
+        time_modified = None,
+        time_removed = None):
+        self.name = name
+        self.creator_id = creator_id
+        if mom_id is not None:
+            self.mom_id = mom_id
+        if dad_id is not None:
+            self.dad_id = dad_id
+        if birth is not None:
+            self.birth = birth
+        if death is not None:
+            self.death = death
+        if time_created is not None:
+            self.time_created = time_created
+        if time_modified is not None:
+            self.time_modified = time_modified
+        if time_removed is not None:
+            self.time_removed = time_removed
+
+
+    def __repr__(self):
+        return '<Person %r>' % self.name
