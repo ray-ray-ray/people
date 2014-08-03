@@ -4,9 +4,22 @@ Start the web server. Define routes and handlers here.
 import flask
 import flask.ext.sqlalchemy
 
-app = flask.Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://localhost:5432/people'
-db = flask.ext.sqlalchemy.SQLAlchemy(app)
+
+def create_app(config):
+    """
+    Instantiate the Flask app and the db.
+
+    :param config: dict of config options
+    :return: Flask app
+    """
+    app = flask.Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = config['SQLALCHEMY_DATABASE_URI']
+    db = flask.ext.sqlalchemy.SQLAlchemy(app)
+    return app, db
+
+
+app, db = create_app({
+    'SQLALCHEMY_DATABASE_URI': 'postgresql+psycopg2://localhost:5432/people'})
 
 
 @app.route('/')
