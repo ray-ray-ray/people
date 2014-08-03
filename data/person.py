@@ -1,3 +1,6 @@
+"""
+Data model for Person
+"""
 __author__ = 'RAY'
 
 
@@ -5,7 +8,11 @@ import datetime
 import people
 db = people.db
 
+
 class Person(db.Model):
+    """
+    SQLAlchemy object for Person
+    """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     mom_id = db.Column(db.Integer)
@@ -16,23 +23,36 @@ class Person(db.Model):
     time_created = db.Column(db.DateTime(timezone=True), default=datetime.datetime.now, nullable=False)
     time_modified = db.Column(
         db.DateTime(timezone=True),
-        default = datetime.datetime.now,
-        onupdate = datetime.datetime.now,
-        nullable = False)
+        default=datetime.datetime.now,
+        onupdate=datetime.datetime.now,
+        nullable=False)
     time_removed = db.Column(db.DateTime(timezone=True))
 
-
     def __init__(
-        self,
-        name,
-        creator_id,
-        mom_id = None,
-        dad_id = None,
-        birth = None,
-        death = None,
-        time_created = None,
-        time_modified = None,
-        time_removed = None):
+            self,
+            name,
+            creator_id,
+            mom_id=None,
+            dad_id=None,
+            birth=None,
+            death=None,
+            time_created=None,
+            time_modified=None,
+            time_removed=None):
+        """
+        Create a Person object which is basically Person row.
+
+        :param name: string
+        :param creator_id: Person.id foreign key
+        :param mom_id: Person.id foreign key
+        :param dad_id: Person.id foreign key
+        :param birth: datetime.datetime
+        :param death: datetime.datetime
+        :param time_created: datetime.datetime
+        :param time_modified: datetime.datetime
+        :param time_removed: datetime.datetime
+        :return: Person object
+        """
         self.name = name
         self.creator_id = creator_id
         if mom_id is not None:
@@ -50,6 +70,10 @@ class Person(db.Model):
         if time_removed is not None:
             self.time_removed = time_removed
 
-
     def __repr__(self):
+        """
+        String representation
+
+        :return: <Person RAY Courtney>
+        """
         return '<Person %r>' % self.name
