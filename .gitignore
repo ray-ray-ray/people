@@ -55,3 +55,6 @@ docs/_build/
 # Pycharm idea stuff
 .idea
 include/
+
+# Nose/man
+man/
