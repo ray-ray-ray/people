@@ -15,8 +15,6 @@ class Person(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    mom_id = db.Column(db.Integer)
-    dad_id = db.Column(db.Integer)
     creator_id = db.Column(db.Integer, nullable=False)
     birth = db.Column(db.DateTime(timezone=True))
     death = db.Column(db.DateTime(timezone=True))
@@ -35,8 +33,6 @@ class Person(db.Model):
             self,
             name,
             creator_id,
-            mom_id=None,
-            dad_id=None,
             birth=None,
             death=None,
             time_created=None,
@@ -47,8 +43,6 @@ class Person(db.Model):
 
         :param name: string
         :param creator_id: Person.id foreign key
-        :param mom_id: Person.id foreign key
-        :param dad_id: Person.id foreign key
         :param birth: datetime.datetime
         :param death: datetime.datetime
         :param time_created: datetime.datetime
@@ -58,10 +52,6 @@ class Person(db.Model):
         """
         self.name = name
         self.creator_id = creator_id
-        if mom_id is not None:
-            self.mom_id = mom_id
-        if dad_id is not None:
-            self.dad_id = dad_id
         if birth is not None:
             self.birth = birth
         if death is not None:

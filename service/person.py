@@ -12,8 +12,6 @@ db = people.db
 def create_person(
         name,
         creator_id,
-        mom_id=None,
-        dad_id=None,
         birth=None,
         death=None):
     """
@@ -21,8 +19,6 @@ def create_person(
 
     :param name: string
     :param creator_id: Person.id foreign key
-    :param mom_id: Person.id foreign key
-    :param dad_id: Person.id foreign key
     :param birth: datetime.datetime
     :param death: datetime.datetime
     :return: Person object
@@ -30,8 +26,6 @@ def create_person(
     person = data.person.Person(
         name,
         creator_id,
-        mom_id,
-        dad_id,
         birth,
         death)
     db.session.add(person)
@@ -47,21 +41,17 @@ DEFAULT_CREATOR = 0
 
 def create_myself(
         name,
-        mom_id=None,
-        dad_id=None,
         birth=None,
         death=None):
     """
     Create a Person object for yourself (i.e., creator_id = id)
 
     :param name: string
-    :param mom_id: Person.id foreign key
-    :param dad_id: Person.id foreign key
     :param birth: datetime.datetime
     :param death: datetime.datetime
     :return: Person object
     """
-    myself = create_person(name, DEFAULT_CREATOR, mom_id, dad_id, birth, death)
+    myself = create_person(name, DEFAULT_CREATOR, birth, death)
     myself.creator_id = myself.id
     db.session.add(myself)
     db.session.commit()
