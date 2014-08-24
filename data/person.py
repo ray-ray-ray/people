@@ -20,7 +20,10 @@ class Person(db.Model):
     creator_id = db.Column(db.Integer, nullable=False)
     birth = db.Column(db.DateTime(timezone=True))
     death = db.Column(db.DateTime(timezone=True))
-    time_created = db.Column(db.DateTime(timezone=True), default=datetime.datetime.now, nullable=False)
+    time_created = db.Column(
+        db.DateTime(timezone=True),
+        default=datetime.datetime.now,
+        nullable=False)
     time_modified = db.Column(
         db.DateTime(timezone=True),
         default=datetime.datetime.now,

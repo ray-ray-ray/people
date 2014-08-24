@@ -1,5 +1,7 @@
 """
-Test that interact with the DB should inherit from this class.
+Tests that interact with the DB should inherit from this class.
+
+Make sure you set the FLASKCONFIG env variable to a testing configuration class.
 
 https://pythonhosted.org/Flask-Testing/
 """
@@ -11,19 +13,38 @@ import people
 
 
 class FlaskSQLAlchemyTest(flask.ext.testing.TestCase):
+    """
+    Base class for any test that interacts with the DB.
 
-    config = {
-        'SQLALCHEMY_DATABASE_URI':
-        'postgresql+psycopg2://localhost:5432/people_test',
-        'TESTING': True}
+    app is the Flask app
+    db is the SQLAlchemy object
+    """
+    app = None
+    db = None
 
     def create_app(self):
-        people.create_app(self.config)
-        return people.app
+        """
+        Get the Flask app and SQLAlchemy object from the people app.
+
+        :return: the Flask app
+        """
+        self.app = people.app
+        self.db = people.db
+        return self.app
 
     def setUp(self):
-        people.db.create_all()
+        """
+        Create the schemas.
+
+        :return: None
+        """
+        self.db.create_all()
 
     def tearDown(self):
-        people.db.session.remove()
-        people.db.drop_all()
+        """
+        Drop all the schemas.
+
+        :return: None
+        """
+        self.db.session.remove()
+        self.db.drop_all()

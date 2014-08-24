@@ -1,15 +1,13 @@
 """
-Builds the DB based on SQLAlchemy models.d
+Builds the DB based on SQLAlchemy models.
 """
 __author__ = 'RAY'
 
-
-import people
 #
-# Required import to load the data models into people.db
+# Must import this to get the models
 #
 import data.person
-
+import people
 
 if __name__ == '__main__':
     db = people.db

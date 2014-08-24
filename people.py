@@ -1,25 +1,16 @@
 """
 Start the web server. Define routes and handlers here.
 """
+__author__ = 'RAY'
+
+
 import flask
 import flask.ext.sqlalchemy
+import os
 
-
-def create_app(config):
-    """
-    Instantiate the Flask app and the db.
-
-    :param config: dict of config options
-    :return: Flask app
-    """
-    app = flask.Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = config['SQLALCHEMY_DATABASE_URI']
-    db = flask.ext.sqlalchemy.SQLAlchemy(app)
-    return app, db
-
-
-app, db = create_app({
-    'SQLALCHEMY_DATABASE_URI': 'postgresql+psycopg2://localhost:5432/people'})
+app = flask.Flask(__name__, template_folder='web/templates')
+app.config.from_object(os.getenv('FLASKCONFIG', 'config.default.Config'))
+db = flask.ext.sqlalchemy.SQLAlchemy(app)
 
 
 @app.route('/')
@@ -30,6 +21,16 @@ def hello_world():
     :return: string
     """
     return 'Hello World!'
+
+
+@app.route('/create')
+def create():
+    """
+    Render page to create a person
+
+    :return: rendered template
+    """
+    return flask.render_template('create.html')
 
 
 if __name__ == '__main__':
