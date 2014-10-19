@@ -4,6 +4,7 @@ Web handlers for the create form.
 __author__ = 'RAY'
 
 import flask
+import re
 import service.person
 
 
@@ -27,6 +28,14 @@ def myself():
     #
     if flask.request.form['name'] == '':
         return flask.render_template('create.html', error='Please enter a name')
+    if not re.match(
+            '\d\d\d\d+-\d\d-\d\dT\d\d:\d\d',
+            flask.request.form['birth']):
+        return flask.render_template(
+            'create.html',
+            error='Invalid birth format')
 
-    person = service.person.create_myself(flask.request.form['name'])
+    person = service.person.create_myself(
+        flask.request.form['name'],
+        birth = flask.request.form['birth'])
     return flask.redirect(flask.url_for('person', uid=person.id))

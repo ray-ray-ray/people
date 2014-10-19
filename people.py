@@ -7,13 +7,18 @@ __author__ = 'RAY'
 import flask
 import flask.ext.sqlalchemy
 import os
-import web.views.create
-import web.views.person
 
 
 app = flask.Flask(__name__, template_folder='web/templates')
 app.config.from_object(os.getenv('FLASKCONFIG', 'config.default.Config'))
 db = flask.ext.sqlalchemy.SQLAlchemy(app)
+
+
+#
+# These require db to exist.
+#
+import web.views.create
+import web.views.person
 
 
 @app.route('/')
