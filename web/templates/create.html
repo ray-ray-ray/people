@@ -5,12 +5,15 @@
     <title>Create a Person</title>
 </head>
 <body>
+    {% if error %}
+        <p id="error">{{ error }}</p>
+    {% endif %}
     <p>Create yourself.</p>
-    <form action="/create" method="post">
+    <form method="post">
         <label for="name">Name</label>
-        <input id="name" type="text"/>
+        <input id="name" name="name" type="text"/>
         <label for="birth">Birthdate (and time)</label>
-        <input id="birth" type="datetime-local"/>
+        <input id="birth" name="birth" type="datetime-local"/>
         <input type="submit"/>
     </form>
 </body>

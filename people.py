@@ -7,6 +7,9 @@ __author__ = 'RAY'
 import flask
 import flask.ext.sqlalchemy
 import os
+import web.views.create
+import web.views.person
+
 
 app = flask.Flask(__name__, template_folder='web/templates')
 app.config.from_object(os.getenv('FLASKCONFIG', 'config.default.Config'))
@@ -23,14 +26,28 @@ def hello_world():
     return 'Hello World!'
 
 
-@app.route('/create')
+@app.route('/create', methods=['GET', 'POST'])
 def create():
     """
-    Render page to create a person
+    Route to the creation form or handle the form data.
 
     :return: rendered template
     """
-    return flask.render_template('create.html')
+    if flask.request.method == 'GET':
+        return web.views.create.home()
+    elif flask.request.method == 'POST':
+        return web.views.create.myself()
+
+
+@app.route('/person/<uid>')
+def person(uid=None):
+    """
+    Render this person.
+
+    :param uid: user id
+    :return: rendered person page
+    """
+    return web.views.person.home(uid=uid)
 
 
 if __name__ == '__main__':

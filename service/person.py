@@ -56,3 +56,13 @@ def create_myself(
     db.session.add(myself)
     db.session.commit()
     return myself
+
+
+def get_person(uid):
+    """
+    Retrieve a person by id.
+
+    :param uid: user id
+    :return: Person object
+    """
+    return data.person.Person.query.get(uid)
