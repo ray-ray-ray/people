@@ -3,6 +3,7 @@ Handlers for the person page.
 """
 __author__ = 'RAY'
 
+import data.relationship
 import flask
 import service.person
 
@@ -24,4 +25,5 @@ def home(uid=None):
         uid = person.id,
         creator_id = creator.id,
         creator_name = creator.name,
-        time_created = person.time_created)
+        time_created = person.time_created,
+        momtype = data.relationship.Rtype.mom.value)
