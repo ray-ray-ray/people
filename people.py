@@ -41,7 +41,7 @@ def create():
     if flask.request.method == 'GET':
         return web.views.create.home()
     elif flask.request.method == 'POST':
-        return web.views.create.myself()
+        return web.views.create.person()
 
 
 @app.route('/person/<uid>')

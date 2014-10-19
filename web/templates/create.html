@@ -8,12 +8,17 @@
     {% if error %}
         <p id="error">{{ error }}</p>
     {% endif %}
-    <p>Create yourself.</p>
+    <p>Create {{ relative }}.</p>
     <form method="post">
         <label for="name">Name</label>
         <input id="name" name="name" type="text"/>
-        <label for="birth">Birthdate (and time)</label>
+        <label for="birth">Birth</label>
         <input id="birth" name="birth" type="datetime-local"/>
+        {% if relationship %}
+            <label for="death">Death</label>
+            <input id="death" name="death" type="datetime-local"/>
+            <input name="relationship" type="hidden" value="{{ relationship }}"/>
+        {% endif %}
         <input type="submit"/>
     </form>
 </body>
