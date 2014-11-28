@@ -5,6 +5,8 @@ __author__ = 'RAY'
 
 import data.relationship
 import flask
+import httplib
+import people
 import re
 import service.person
 
@@ -15,17 +17,7 @@ def home():
 
     :return: the form
     """
-    relationship = flask.request.args.get('relationship')
-    if relationship == str(data.relationship.Rtype.mom.value):
-        relative = 'your mom'
-    else:
-        relative = 'yourself'
-        relationship = None
-
-    return flask.render_template(
-        'create.html',
-        relative=relative,
-        relationship=relationship)
+    return flask.render_template('create.html')
 
 
 def validate_form():
@@ -57,13 +49,17 @@ def person():
     :return: redirect to the person page
     """
     if not validate_form():
-        return flask.redirect(flask.url_for('create'))
+        flask.abort(httplib.BAD_REQUEST)
 
     person = service.person.create_myself(
         flask.request.form['name'],
         birth = flask.request.form['birth'])
 
+    @people.app.after_request
+    def remember_user(response):
+        response.set_cookie('user', person.id)
+
     #
-    # TODO: create the relationship
+    # TODO: implement Flask-login
     #
     return flask.redirect(flask.url_for('person', uid=person.id))

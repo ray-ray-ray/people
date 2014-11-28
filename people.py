@@ -18,6 +18,7 @@ db = flask.ext.sqlalchemy.SQLAlchemy(app)
 # These require db to exist.
 #
 import web.views.create
+import web.views.home
 import web.views.person
 
 
@@ -26,9 +27,9 @@ def hello_world():
     """
     Root handler to confirm server is up.
 
-    :return: string
+    :return: rendered template
     """
-    return 'Hello World!'
+    return web.views.home.home()
 
 
 @app.route('/create', methods=['GET', 'POST'])
@@ -45,14 +46,14 @@ def create():
 
 
 @app.route('/person/<uid>')
-def person(uid=None):
+def person(uid):
     """
     Render this person.
 
     :param uid: user id
     :return: rendered person page
     """
-    return web.views.person.home(uid=uid)
+    return web.views.person.home(uid)
 
 
 if __name__ == '__main__':

@@ -8,11 +8,12 @@ import flask
 import service.person
 
 
-def home(uid=None):
+def home(uid):
     """
     Render a person.
 
     :param uid: user id
+    :param is_self: whether this person is the current user
     :return: person page
     """
     person = service.person.get_person(uid)
@@ -26,4 +27,5 @@ def home(uid=None):
         creator_id = creator.id,
         creator_name = creator.name,
         time_created = person.time_created,
-        momtype = data.relationship.Rtype.mom.value)
+        momtype = data.relationship.Rtype.mom.value,
+        dadtype = data.relationship.Rtype.dad.value)
