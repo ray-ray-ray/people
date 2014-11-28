@@ -21,6 +21,7 @@ def home(uid):
     return flask.render_template(
         'person.html',
         name = person.name,
+        email = person.email,
         birth = person.birth,
         death = person.death,
         uid = person.id,

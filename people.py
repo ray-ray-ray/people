@@ -5,14 +5,18 @@ __author__ = 'RAY'
 
 
 import flask
+import flask.ext.login
 import flask.ext.sqlalchemy
 import os
 
-
+#
+# Flask app, db, and login setup
+#
 app = flask.Flask(__name__, template_folder='web/templates')
 app.config.from_object(os.getenv('FLASKCONFIG', 'config.default.Config'))
 db = flask.ext.sqlalchemy.SQLAlchemy(app)
-
+login_manager = flask.ext.login.LoginManager()
+login_manager.init_app(app)
 
 #
 # These require db to exist.

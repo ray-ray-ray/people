@@ -19,6 +19,7 @@ class DevelopmentConfig(Config):
     """
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://localhost:5432/people'
+    SECRET_KEY = 'RAYismakingpeople'
 
 
 class TestConfig(Config):

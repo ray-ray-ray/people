@@ -28,6 +28,10 @@ def validate_form():
     """
     if flask.request.form['name'] == '':
         return False
+    if flask.request.form['email'] == '':
+        return False
+    if flask.request.form['password'] == '':
+        return False
 
     date_re = '\d\d\d\d+-\d\d-\d\dT\d\d:\d\d'
     if not re.match(date_re, flask.request.form['birth']):
@@ -53,11 +57,9 @@ def person():
 
     person = service.person.create_myself(
         flask.request.form['name'],
+        flask.request.form['email'],
+        flask.request.form['password'],
         birth = flask.request.form['birth'])
-
-    @people.app.after_request
-    def remember_user(response):
-        response.set_cookie('user', person.id)
 
     #
     # TODO: implement Flask-login

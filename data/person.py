@@ -5,16 +5,19 @@ __author__ = 'RAY'
 
 
 import datetime
+import flask.ext.login
 import people
 db = people.db
 
 
-class Person(db.Model):
+class Person(db.Model, flask.ext.login.UserMixin):
     """
     SQLAlchemy object for Person
     """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
     creator_id = db.Column(db.Integer, nullable=False)
     birth = db.Column(db.DateTime(timezone=True))
     death = db.Column(db.DateTime(timezone=True))
@@ -32,6 +35,8 @@ class Person(db.Model):
     def __init__(
             self,
             name,
+            email,
+            password,
             creator_id,
             birth=None,
             death=None,
@@ -42,6 +47,8 @@ class Person(db.Model):
         Create a Person object which is basically Person row.
 
         :param name: string
+        :param email: string
+        :param password: string
         :param creator_id: Person.id foreign key
         :param birth: datetime.datetime
         :param death: datetime.datetime
@@ -51,6 +58,8 @@ class Person(db.Model):
         :return: None
         """
         self.name = name
+        self.email = email
+        self.password = password
         self.creator_id = creator_id
         if birth is not None:
             self.birth = birth
