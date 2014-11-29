@@ -5,9 +5,9 @@ __author__ = 'RAY'
 
 
 import data.person
+import flask.ext.login
 import people
 db = people.db
-login_manager = people.login_manager
 
 
 def create_person(
@@ -69,7 +69,6 @@ def create_myself(
     return myself
 
 
-@login_manager.user_loader
 def get_person(uid):
     """
     Retrieve a person by id.
@@ -78,3 +77,21 @@ def get_person(uid):
     :return: Person object
     """
     return data.person.Person.query.get(uid)
+
+
+def login(email, password):
+    """
+    Login the user after checking the credentials.
+
+    :param email: email address
+    :param password: password
+    :return: whether the login was successful
+    """
+    user = data.person.Person.query.filter_by(
+        email=email,
+        password=password).first()
+    if user is None:
+        return False
+    else:
+        flask.ext.login.login_user(user)
+        return True

@@ -3,10 +3,8 @@ Web handlers for the create form.
 """
 __author__ = 'RAY'
 
-import data.relationship
 import flask
 import httplib
-import people
 import re
 import service.person
 
@@ -55,13 +53,13 @@ def person():
     if not validate_form():
         flask.abort(httplib.BAD_REQUEST)
 
-    person = service.person.create_myself(
+    me = service.person.create_myself(
         flask.request.form['name'],
         flask.request.form['email'],
         flask.request.form['password'],
-        birth = flask.request.form['birth'])
+        birth=flask.request.form['birth'])
 
     #
     # TODO: implement Flask-login
     #
-    return flask.redirect(flask.url_for('person', uid=person.id))
+    return flask.redirect(flask.url_for('person', uid=me.id))

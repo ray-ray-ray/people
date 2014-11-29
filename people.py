@@ -17,17 +17,26 @@ app.config.from_object(os.getenv('FLASKCONFIG', 'config.default.Config'))
 db = flask.ext.sqlalchemy.SQLAlchemy(app)
 login_manager = flask.ext.login.LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = 'login'
+
 
 #
 # These require db to exist.
 #
+import service.person
 import web.views.create
 import web.views.home
+import web.views.login
 import web.views.person
 
 
+@login_manager.user_loader
+def user_loader(uid):
+    return service.person.get_person(uid)
+
+
 @app.route('/')
-def hello_world():
+def home():
     """
     Root handler to confirm server is up.
 
@@ -41,12 +50,25 @@ def create():
     """
     Route to the creation form or handle the form data.
 
-    :return: rendered template
+    :return: rendered template or redirect
     """
     if flask.request.method == 'GET':
         return web.views.create.home()
     elif flask.request.method == 'POST':
         return web.views.create.person()
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """
+    Render the login form and handle it.
+
+    :return: rendered template
+    """
+    if flask.request.method == 'GET':
+        return web.views.login.home()
+    elif flask.request.method == 'POST':
+        return web.views.login.login()
 
 
 @app.route('/person/<uid>')

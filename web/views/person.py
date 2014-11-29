@@ -13,7 +13,6 @@ def home(uid):
     Render a person.
 
     :param uid: user id
-    :param is_self: whether this person is the current user
     :return: person page
     """
     person = service.person.get_person(uid)

@@ -7,4 +7,9 @@ import flask
 
 
 def home():
+    """
+    Render the homepage
+
+    :return: rendered template
+    """
     return flask.render_template('home.html')
