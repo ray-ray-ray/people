@@ -58,3 +58,6 @@ include/
 
 # Nose/man
 man/
+
+# PIP?
+pip-selfcheck.json

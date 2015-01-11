@@ -1,23 +1,21 @@
 """
-Data model for Person
+Data model for User
 """
 __author__ = 'RAY'
-
 
 import datetime
 import people
 db = people.db
 
 
-class Person(db.Model):
+class User(db.Model):
     """
-    SQLAlchemy object for Person
+    SQLAlchemy object for User
     """
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    creator_id = db.Column(db.Integer, nullable=False)
-    birth = db.Column(db.DateTime(timezone=True))
-    death = db.Column(db.DateTime(timezone=True))
+    pid = db.Column(db.Integer, nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
     time_created = db.Column(
         db.DateTime(timezone=True),
         default=datetime.datetime.now,
@@ -28,34 +26,30 @@ class Person(db.Model):
         onupdate=datetime.datetime.now,
         nullable=False)
     time_removed = db.Column(db.DateTime(timezone=True))
+    __table_args__ = (db.UniqueConstraint('email'), db.UniqueConstraint('pid'))
 
     def __init__(
             self,
-            name,
-            creator_id,
-            birth=None,
-            death=None,
+            pid,
+            email,
+            password,
             time_created=None,
             time_modified=None,
             time_removed=None):
         """
-        Create a Person object which is basically Person row.
+        Create a user object.
 
-        :param name: string
-        :param creator_id: Person.id foreign key
-        :param birth: datetime.datetime
-        :param death: datetime.datetime
+        :param pid: data.person.id
+        :param email: email address
+        :param password: encrypted password
         :param time_created: datetime.datetime
         :param time_modified: datetime.datetime
         :param time_removed: datetime.datetime
         :return: None
         """
-        self.name = name
-        self.creator_id = creator_id
-        if birth is not None:
-            self.birth = birth
-        if death is not None:
-            self.death = death
+        self.pid = pid
+        self.email = email
+        self.password = password
         if time_created is not None:
             self.time_created = time_created
         if time_modified is not None:
@@ -67,6 +61,6 @@ class Person(db.Model):
         """
         String representation
 
-        :return: <Person RAY Courtney>
+        :return: <User ray.allen.courtney@gmail.com>
         """
-        return '<Person %r>' % self.name
+        return '<User %s>' % self.email

@@ -23,7 +23,7 @@ login_manager.login_view = 'login'
 #
 # These require db to exist.
 #
-import service.person
+import service.user
 import web.views.create
 import web.views.home
 import web.views.login
@@ -32,7 +32,13 @@ import web.views.person
 
 @login_manager.user_loader
 def user_loader(uid):
-    return service.person.get_person(uid)
+    """
+    Get a user for the login manager.
+
+    :param uid: User.id
+    :return: the user object
+    """
+    return service.user.get_user(uid)
 
 
 @app.route('/')
@@ -55,7 +61,7 @@ def create():
     if flask.request.method == 'GET':
         return web.views.create.home()
     elif flask.request.method == 'POST':
-        return web.views.create.person()
+        return web.views.create.myself()
 
 
 @app.route('/login', methods=['GET', 'POST'])

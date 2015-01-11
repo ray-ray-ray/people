@@ -19,7 +19,7 @@ class TestPerson(test.unit.flask_sqlalchemy.FlaskSQLAlchemyTest):
 
         :return: None
         """
-        me = service.person.create_myself('RAY Test', 'ray@ray.com', 'ray')
+        me = service.person.create_myself('RAY Test')
         nose.tools.assert_not_equal(
             me.creator_id,
             service.person.DEFAULT_CREATOR)

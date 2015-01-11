@@ -7,6 +7,7 @@ import flask
 import httplib
 import re
 import service.person
+import service.user
 
 
 def home():
@@ -44,9 +45,9 @@ def validate_form():
     return True
 
 
-def person():
+def myself():
     """
-    Use the form data to create a person.
+    Use the form data to create the current user.
 
     :return: redirect to the person page
     """
@@ -55,9 +56,11 @@ def person():
 
     me = service.person.create_myself(
         flask.request.form['name'],
-        flask.request.form['email'],
-        flask.request.form['password'],
         birth=flask.request.form['birth'])
+    service.user.create_user(
+        me.id,
+        flask.request.form['email'],
+        flask.request.form['password'])
 
     #
     # TODO: implement Flask-login
