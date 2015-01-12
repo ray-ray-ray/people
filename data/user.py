@@ -14,7 +14,7 @@ class User(db.Model, flask.ext.security.UserMixin):
     SQLAlchemy object for User
     """
     id = db.Column(db.Integer, primary_key=True)
-    pid = db.Column(db.Integer, nullable=False)
+    pid = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     active = db.Column(db.Boolean, nullable=False)

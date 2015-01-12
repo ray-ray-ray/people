@@ -25,8 +25,8 @@ class Relationship(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.Integer, nullable=False)
-    from_pid = db.Column(db.Integer, nullable=False)
-    to_pid = db.Column(db.Integer, nullable=False)
+    from_pid = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=False)
+    to_pid = db.Column(db.Integer, db.ForeignKey('person.id'), nullable=False)
     time_created = db.Column(
         db.DateTime(timezone=True),
         default=datetime.datetime.now,

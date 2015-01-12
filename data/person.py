@@ -15,7 +15,10 @@ class Person(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    creator_id = db.Column(db.Integer, nullable=False)
+    creator_id = db.Column(
+        db.Integer,
+        db.ForeignKey('person.id'),
+        nullable=False)
     birth = db.Column(db.DateTime(timezone=True))
     death = db.Column(db.DateTime(timezone=True))
     time_created = db.Column(

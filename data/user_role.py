@@ -13,8 +13,8 @@ class UserRole(db.Model):
     SQLAlchemy Object for UserRole rows
     """
     id = db.Column(db.Integer, primary_key=True)
-    uid = db.Column(db.Integer, nullable=False)
-    rid = db.Column(db.Integer, nullable=False)
+    uid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    rid = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
     time_created = db.Column(
         db.DateTime(timezone=True),
         default=datetime.datetime.now,

@@ -19,5 +19,5 @@ if __name__ == '__main__':
     user_datastore = people.user_datastore
     db.drop_all()
     db.create_all()
-    user_datastore.create_user(email='ray@ray.com', password='password')
+    #user_datastore.create_user(email='ray@ray.com', password='password')
     db.session.commit()
