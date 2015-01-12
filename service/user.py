@@ -18,7 +18,7 @@ def create_user(pid, email, password):
     :param password: encrypted password
     :return: User object
     """
-    user = data.user.User(pid, email, password)
+    user = data.user.User(pid, email, password, True)
     db.session.add(user)
     db.session.commit()
     return user
